@@ -11,4 +11,5 @@ class Order(Base):
     book_id = Column(Integer)
     book_name = Column(String(100))
     price = Column(Float)
-    subcribed_at = Column(DateTime)
+    quantity = Column(Integer)
+    subscribed_at = Column(DateTime)

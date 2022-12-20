@@ -7,21 +7,34 @@ export const Orders = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:8000/orders');
+            const response = await fetch('http://localhost:8002/orders');
             const content = await response.json();
             setOrders(content);
         })();
     }, []);
 
-    const del = async order_id => {
+    const del = async (order_id) => {
         if (window.confirm('Are you sure to delete this record?')) {
-            await fetch(`http://localhost:8000/orders/${order_id}`, {
+            await fetch(`http://localhost:8002/orders/${order_id}`, {
                 method: 'DELETE'
             });
 
             setOrders(orders.filter(obj => obj.order_id !== order_id));
         }
     }
+
+    const update = async (order_id) => {
+    const update_num = Number(window.prompt('Type a number to change the quantity', ''));
+
+    await fetch(`http://localhost:8002/orders/${order_id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        update_num,
+      }),
+    });
+
+    window.location.reload();
+  };
 
     return <Wrapper>
         <div className="pt-3 pb-2 mb-3 border-bottom">
@@ -37,7 +50,8 @@ export const Orders = () => {
                     <th scope="col">book_id</th>
                     <th scope="col">book_name</th>
                     <th scope="col">price</th>
-                    <th scope="col">subcribed_at</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">subscribed_at</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,12 +62,22 @@ export const Orders = () => {
                         <td>{order.book_id}</td>
                         <td>{order.book_name}</td>
                         <td>{order.price}</td>
-                        <td>{order.subcribed_at}</td>
+                        <td>{order.quantity}</td>
+                        <td>{order.subscribed_at}</td>
                         <td>
                             <a href="#" className="btn btn-sm btn-outline-secondary"
                                onClick={e => del(order.order_id)}
                             >
                                 Delete
+                            </a>
+                        </td>
+                        <td>
+                            <a
+                              href='#'
+                              className='btn btn-sm btn-outline-secondary'
+                              onClick={(e) => update(order.order_id)}
+                            >
+                              Update
                             </a>
                         </td>
                     </tr>
