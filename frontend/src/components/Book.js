@@ -1,9 +1,44 @@
 import { useEffect, useState } from 'react';
 import { Wrapper } from './Wrapper';
 import { Link } from 'react-router-dom';
+import ReactPaginate from "react-paginate";
 
 export const Book = () => {
   const [books, setBooks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+    const PER_PAGE = 15;
+    const offset = currentPage * PER_PAGE;
+    const currentPageData = books
+        .slice(offset, offset + PER_PAGE)
+        .map((book) => {
+              return (
+                <tr key={book.book_id}>
+                  <td>{book.book_id}</td>
+                  <td>{book.book_name}</td>
+                  <td>{book.price}</td>
+                  <td>{book.quantity}</td>
+                  <td>
+                    <a
+                      href='#'
+                      className='btn btn-sm btn-outline-secondary'
+                      onClick={(e) => del(book.book_id)}
+                    >
+                      Delete
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      href='#'
+                      className='btn btn-sm btn-outline-secondary'
+                      onClick={(e) => update(book.book_id)}
+                    >
+                      Update
+                    </a>
+                  </td>
+                </tr>
+              );
+            })
+    const pageCount = Math.ceil(books.length / PER_PAGE);
 
   useEffect(() => {
     (async () => {
@@ -36,6 +71,10 @@ export const Book = () => {
     window.location.reload();
   };
 
+  function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+  }
+
   return (
     <Wrapper>
       <div className='pt-3 pb-2 mb-3 border-bottom'>
@@ -58,34 +97,18 @@ export const Book = () => {
             </tr>
           </thead>
           <tbody>
-            {books.map((book) => {
-              return (
-                <tr key={book.book_id}>
-                  <td>{book.book_id}</td>
-                  <td>{book.book_name}</td>
-                  <td>{book.price}</td>
-                  <td>{book.quantity}</td>
-                  <td>
-                    <a
-                      href='#'
-                      className='btn btn-sm btn-outline-secondary'
-                      onClick={(e) => del(book.book_id)}
-                    >
-                      Delete
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href='#'
-                      className='btn btn-sm btn-outline-secondary'
-                      onClick={(e) => update(book.book_id)}
-                    >
-                      Update
-                    </a>
-                  </td>
-                </tr>
-              );
-            })}
+            {currentPageData}
+            <ReactPaginate
+                previousLabel={"← Previous"}
+                nextLabel={"Next →"}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                previousLinkClassName={"pagination__link"}
+                nextLinkClassName={"pagination__link"}
+                disabledClassName={"pagination__link--disabled"}
+                activeClassName={"pagination__link--active"}
+              />
           </tbody>
         </table>
       </div>

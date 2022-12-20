@@ -1,5 +1,5 @@
 {
-  "name": "inventory-frontend",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,7 +15,8 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "sweetpagination": "^1.0.15",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-paginate": "8.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

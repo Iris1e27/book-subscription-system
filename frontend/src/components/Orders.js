@@ -1,9 +1,43 @@
 import {useEffect, useState} from "react";
 import {Wrapper} from "./Wrapper";
 import {Link} from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 export const Orders = () => {
     const [orders, setOrders] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const PER_PAGE = 15;
+    const offset = currentPage * PER_PAGE;
+    const currentPageData = orders
+        .slice(offset, offset + PER_PAGE)
+        .map(order => {
+                    return <tr key={order.order_id}>
+                        <td>{order.order_id}</td>
+                        <td>{order.user_id}</td>
+                        <td>{order.book_id}</td>
+                        <td>{order.book_name}</td>
+                        <td>{order.price}</td>
+                        <td>{order.quantity}</td>
+                        <td>{order.subscribed_at}</td>
+                        <td>
+                            <a href="#" className="btn btn-sm btn-outline-secondary"
+                               onClick={e => del(order.order_id)}
+                            >
+                                Delete
+                            </a>
+                        </td>
+                        <td>
+                            <a
+                              href='#'
+                              className='btn btn-sm btn-outline-secondary'
+                              onClick={(e) => update(order.order_id)}
+                            >
+                              Update
+                            </a>
+                        </td>
+                    </tr>
+                })
+    const pageCount = Math.ceil(orders.length / PER_PAGE);
 
     useEffect(() => {
         (async () => {
@@ -36,6 +70,11 @@ export const Orders = () => {
     window.location.reload();
   };
 
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+
+
     return <Wrapper>
         <div className="pt-3 pb-2 mb-3 border-bottom">
             <Link to={`/create-an-order`} className="btn btn-sm btn-outline-secondary">Add</Link>
@@ -55,33 +94,18 @@ export const Orders = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {orders.map(order => {
-                    return <tr key={order.order_id}>
-                        <td>{order.order_id}</td>
-                        <td>{order.user_id}</td>
-                        <td>{order.book_id}</td>
-                        <td>{order.book_name}</td>
-                        <td>{order.price}</td>
-                        <td>{order.quantity}</td>
-                        <td>{order.subscribed_at}</td>
-                        <td>
-                            <a href="#" className="btn btn-sm btn-outline-secondary"
-                               onClick={e => del(order.order_id)}
-                            >
-                                Delete
-                            </a>
-                        </td>
-                        <td>
-                            <a
-                              href='#'
-                              className='btn btn-sm btn-outline-secondary'
-                              onClick={(e) => update(order.order_id)}
-                            >
-                              Update
-                            </a>
-                        </td>
-                    </tr>
-                })}
+                    {currentPageData}
+                    <ReactPaginate
+                        previousLabel={"← Previous"}
+                        nextLabel={"Next →"}
+                        pageCount={pageCount}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination"}
+                        previousLinkClassName={"pagination__link"}
+                        nextLinkClassName={"pagination__link"}
+                        disabledClassName={"pagination__link--disabled"}
+                        activeClassName={"pagination__link--active"}
+                      />
                 </tbody>
             </table>
         </div>

@@ -6,12 +6,15 @@ A group project for COMS E6156, written by 6 people
 1. install all dependencies
 2. run frontend and backend app independently
 
-- Terminal 1: 
+- Terminal 0: 
   - `cd frontend`
   - `npm install package`
-  - `uvicorn main:app --reload` (default port is 8000)
-- Terminal 2: 
-  - `cd order`
-  - `pip install -r requirements.txt`
   - `npm start`
+
+- Terminal 1,2,3: 
+  - `cd order` and `cd book` and `cd user`
+  - `pip install -r requirements.txt`
+  - `python main.py`
+  - or if no main `uvicorn main:app --reload` (default port is 8000)
+
 
