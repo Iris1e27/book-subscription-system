@@ -3,7 +3,6 @@ import {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
 export const UsersCreate = () => {
-    const [userID, setUserId] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
@@ -19,7 +18,7 @@ export const UsersCreate = () => {
                 'Access-Control-Allow-Credentials': 'true'
             },
             body: JSON.stringify({
-                userID, email, address
+                email, address
             })
         });
 
@@ -28,14 +27,6 @@ export const UsersCreate = () => {
 
     return <Wrapper>
         <form className="mt-3" onSubmit={submit}>
-            <div className="form-floating pb-3">
-                <input type="number"
-                       className="form-control"
-                       placeholder="user_id"
-                       onChange={e => setUserId(e.target.value)}
-                />
-                <label>user_id</label>
-            </div>
 
             <div className="form-floating pb-3">
                 <input type="string"

@@ -7,6 +7,7 @@ import {UsersCreate} from "./components/UsersCreate";
 import {User} from "./components/User";
 import {Wrapper} from "./components/Wrapper";
 import NotFound from "./components/NotFound";
+import {Login} from "./components/Login";
 
 function App() {
     return <BrowserRouter>

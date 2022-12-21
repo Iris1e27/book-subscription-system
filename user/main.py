@@ -73,6 +73,24 @@ async def update_user(request: Request, id: int, db: Session = Depends(get_datab
         "user": newUser
     })
 
+# @app.post("/users/search-by-email")
+# async def update_user(request: Request, db: Session = Depends(get_database_session)):
+#     data = await request.json()
+#     #data = requestBody.loads()requestBody
+#     print(data["email"])
+#     result = db.query(User).filter(User.email == data["email"]).all()
+#     if len(result) == 0:
+#         JSONResponse(status_code=404, content={
+#             "status_code": 404,
+#             "message": "not found"
+#         })
+#     else:
+#         return JSONResponse(status_code=200, content={
+#             "status_code": 200,
+#             "message": "success",
+#             "user": json.dumps(result)
+#         })
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

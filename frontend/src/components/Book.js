@@ -61,6 +61,10 @@ export const Book = () => {
   const update = async (book_id) => {
     const update_num = Number(window.prompt('Type a number to change the quantity', ''));
 
+    if (update_num === 0) {
+        return;
+    }
+
     await fetch(`http://localhost:8001/books/${book_id}`, {
       method: 'PATCH',
       body: JSON.stringify({

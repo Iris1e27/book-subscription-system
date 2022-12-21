@@ -53,18 +53,22 @@ export const User = () => {
         }
     }
 
-    const update = async (user_id) => {
-    const update_str = String(window.prompt('Type a string to change the address', ''));
+     const update = async (user_id) => {
+        var update_str = prompt('Type a string to change the address', '');
 
-    await fetch(`http://localhost:8000/users/${user_id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        update_str,
-      }),
-    });
+        if (update_str === null) {
+            return;
+        }
 
-    window.location.reload();
-  };
+        await fetch(`http://localhost:8000/users/${user_id}`, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                update_str,
+            }),
+        });
+
+        window.location.reload();
+    };
 
     function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);

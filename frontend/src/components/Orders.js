@@ -58,17 +58,19 @@ export const Orders = () => {
     }
 
     const update = async (order_id) => {
-    const update_num = Number(window.prompt('Type a number to change the quantity', ''));
+        const update_num = Number(window.prompt('Type a number to change the quantity', ''));
+        if (update_num === 0) {
+                return;
+            }
+        await fetch(`http://localhost:8002/orders/${order_id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            update_num,
+          }),
+        });
 
-    await fetch(`http://localhost:8002/orders/${order_id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        update_num,
-      }),
-    });
-
-    window.location.reload();
-  };
+        window.location.reload();
+    };
 
     function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
