@@ -8,11 +8,14 @@ import {User} from "./components/User";
 import {Wrapper} from "./components/Wrapper";
 import NotFound from "./components/NotFound";
 import {Login} from "./components/Login";
+import {Register} from "./components/Register";
 
 function App() {
     return <BrowserRouter>
         <Routes>
             <Route path="/" element={<Wrapper/>}/>
+            <Route path='/register' element={<Register />} />
+            {/*<Route path='/login' element={<Login />} />*/}
             <Route path="/orders" element={<Orders/>}/>
             <Route path="/create-an-order" element={<OrdersCreate/>}/>
             <Route path='/books' element={<Book />} />
