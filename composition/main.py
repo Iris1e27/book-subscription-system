@@ -35,13 +35,13 @@ oauth.register(
 @app.get('/')
 async def homepage(request: Request):
     user = request.session.get('user')
-    if user:
-        data = json.dumps(user)
-        html = (
-            f'<pre>{data}</pre>'
-            '<a href="/logout">logout</a>'
-        )
-        return HTMLResponse(html)
+    # if user:
+    #     data = json.dumps(user)
+    #     html = (
+    #         f'<pre>{data}</pre>'
+    #         '<a href="/logout">logout</a>'
+    #     )
+    #     return HTMLResponse(html)
     return HTMLResponse('<a href="/login">login</a>')
 
 
@@ -71,14 +71,14 @@ async def auth(request: Request):
     user = token.get('userinfo')
     if user:
         request.session['user'] = dict(user) # email = user["email"]
-        response = requests.post('http://127.0.0.1:8000' + '/search-by-email', json=json.dumps(user))
-        if response.status_code != 200: # not find that person
-            newUser = {"email": user["email"], "address": 'aasd'}
-            requests.post('http://127.0.0.1:8000' + '/users', json=json.dumps(newUser))
-        else:
-            return HTMLResponse(f'the user exists')
-        return RedirectResponse(url='/')
-    return RedirectResponse(url='/')
+    #     response = requests.post('http://127.0.0.1:8000' + '/search-by-email', json=json.dumps(user))
+    #     if response.status_code != 200: # not find that person
+    #         newUser = {"email": user["email"], "address": 'aasd'}
+    #         requests.post('http://127.0.0.1:8000' + '/users', json=json.dumps(newUser))
+    #     else:
+    #         return HTMLResponse(f'the user exists')
+    #     return RedirectResponse(url='/')
+    return RedirectResponse(url='http://127.0.0.1:3000/users/'+id)
 
 @app.get('/logout')
 async def logout(request: Request):

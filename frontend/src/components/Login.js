@@ -38,31 +38,12 @@ export const Login = () => {
     //await navigate('');
   };
 
-  //   const submit_google = async (e) => {
-  //     e.preventDefault();
+  const handleClick = async (e) => {
+    e.preventDefault();
 
-  //     try {
-  //       const response = await fetch('http://localhost:8000/google', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify({
-  //           email,
-  //           password,
-  //         }),
-  //       });
-  //       const data = await response.json();
-  //       console.log('data:' + JSON.stringify(data));
+    window.location.href="http://127.0.0.1:5000"
+  };
 
-  //       if (data.success) {
-  //         // await navigate('/products');
-  //       } else {
-  //         // Login failed, display an error message
-  //         setError(data.message);
-  //       }
-  //     } catch (error) {
-  //       // An error occurred, display a message
-  //       setError(error.message);
-  //     }
 
   return (
     <>
@@ -104,6 +85,7 @@ export const Login = () => {
             <button className='w-100 btn btn-primary btn-lg' type='submit'>
               Log in
             </button>
+            <botton onClick={handleClick}>Google Login</botton>
           </form>
         </main>
       </div>

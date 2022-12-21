@@ -37,6 +37,11 @@ async def read_users(request: Request, db: Session = Depends(get_database_sessio
     users = db.query(User).all()
     return users
 
+@app.get("/users/{id}")
+async def get_user(request: Request, id: int, db: Session = Depends(get_database_session)):
+    user = db.query(User).get(id)
+    return user
+
 @app.post("/users")
 async def create_user(request: Request, db: Session = Depends(get_database_session)):
     data = await request.json()
@@ -73,23 +78,23 @@ async def update_user(request: Request, id: int, db: Session = Depends(get_datab
         "user": newUser
     })
 
-# @app.post("/users/search-by-email")
-# async def update_user(request: Request, db: Session = Depends(get_database_session)):
-#     data = await request.json()
-#     #data = requestBody.loads()requestBody
-#     print(data["email"])
-#     result = db.query(User).filter(User.email == data["email"]).all()
-#     if len(result) == 0:
-#         JSONResponse(status_code=404, content={
-#             "status_code": 404,
-#             "message": "not found"
-#         })
-#     else:
-#         return JSONResponse(status_code=200, content={
-#             "status_code": 200,
-#             "message": "success",
-#             "user": json.dumps(result)
-#         })
+@app.post("/users/search-by-email")
+async def update_user(request: Request, db: Session = Depends(get_database_session)):
+    requestBody = await request.json()
+    data = requestBody.loads()
+    print(data["email"])
+    result = db.query(User).filter(User.email == data["email"]).all()
+    if len(result) == 0:
+        JSONResponse(status_code=404, content={
+            "status_code": 404,
+            "message": "not found"
+        })
+    else:
+        return JSONResponse(status_code=200, content={
+            "status_code": 200,
+            "message": "success",
+            "user": json.dumps(result)
+        })
 
 
 if __name__ == "__main__":
