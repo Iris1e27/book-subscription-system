@@ -3,6 +3,8 @@ import { Wrapper } from './Wrapper';
 import { Link } from 'react-router-dom';
 import ReactPaginate from "react-paginate";
 
+const BOOK_SERVER_URL = 'http://127.0.0.1:8001'
+
 export const Book = () => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -42,7 +44,7 @@ export const Book = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch('http://localhost:8001/books');
+      const response = await fetch(BOOK_SERVER_URL+'/books');
       const content = await response.json();
       setBooks(content);
     })();
@@ -50,7 +52,7 @@ export const Book = () => {
 
   const del = async (book_id) => {
     if (window.confirm('Are you sure to delete this record?')) {
-      await fetch(`http://localhost:8001/books/${book_id}`, {
+      await fetch(BOOK_SERVER_URL+book_id, {
         method: 'DELETE',
       });
 
@@ -65,7 +67,7 @@ export const Book = () => {
         return;
     }
 
-    await fetch(`http://localhost:8001/books/${book_id}`, {
+    await fetch(+`/books/${book_id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         update_num,

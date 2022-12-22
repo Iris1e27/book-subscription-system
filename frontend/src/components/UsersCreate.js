@@ -2,6 +2,8 @@ import {Wrapper} from "./Wrapper";
 import {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
+const USER_SERVER_URL = 'http://127.0.0.1:8000'
+
 export const UsersCreate = () => {
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
@@ -10,7 +12,7 @@ export const UsersCreate = () => {
     const submit = async e => {
         e.preventDefault();
 
-        await fetch('http://localhost:8000/users', {
+        await fetch(USER_SERVER_URL+'/users', {
             method: 'POST',
             body: JSON.stringify({
                 email, address

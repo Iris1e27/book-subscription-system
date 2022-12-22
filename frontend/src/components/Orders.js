@@ -3,6 +3,9 @@ import {Wrapper} from "./Wrapper";
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
+
+const ORDER_SERVER_URL = 'http://127.0.0.1:8002'
+
 export const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -41,7 +44,7 @@ export const Orders = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:8002/orders');
+            const response = await fetch(ORDER_SERVER_URL+'/orders');
             const content = await response.json();
             setOrders(content);
         })();
@@ -49,7 +52,7 @@ export const Orders = () => {
 
     const del = async (order_id) => {
         if (window.confirm('Are you sure to delete this record?')) {
-            await fetch(`http://localhost:8002/orders/${order_id}`, {
+            await fetch(ORDER_SERVER_URL+`orders/${order_id}`, {
                 method: 'DELETE'
             });
 
@@ -62,7 +65,7 @@ export const Orders = () => {
         if (update_num === 0) {
                 return;
             }
-        await fetch(`http://localhost:8002/orders/${order_id}`, {
+        await fetch(ORDER_SERVER_URL+`orders/${order_id}`, {
           method: 'PATCH',
           body: JSON.stringify({
             update_num,

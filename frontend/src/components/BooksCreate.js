@@ -2,6 +2,8 @@ import { Wrapper } from './Wrapper';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const BOOK_SERVER_URL = 'http://127.0.0.1:8001'
+
 export const BooksCreate = () => {
   const [book_name, setBookName] = useState('');
   const [price, setPrice] = useState('');
@@ -11,7 +13,7 @@ export const BooksCreate = () => {
   const submit = async (e) => {
     e.preventDefault();
 
-    await fetch('http://localhost:8001/books', {
+    await fetch(BOOK_SERVER_URL+'/books', {
       method: 'POST',
       body: JSON.stringify({
         book_name,

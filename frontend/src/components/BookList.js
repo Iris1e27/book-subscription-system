@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { WrapperID } from './WrapperID';
 import ReactPaginate from "react-paginate";
 
+const BOOK_SERVER_URL = 'http://127.0.0.1:8001'
+
 export const BookList = () => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -23,7 +25,7 @@ export const BookList = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch('http://localhost:8001/books');
+      const response = await fetch(BOOK_SERVER_URL+'/books');
       const content = await response.json();
       setBooks(content);
     })();

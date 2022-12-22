@@ -3,6 +3,8 @@ import {WrapperID} from "./WrapperID";
 import {Link, useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
+const ORDER_SERVER_URL = 'http://127.0.0.1:8002'
+
 export const OrderList = () => {
 
     const user_params = useParams();
@@ -28,7 +30,7 @@ export const OrderList = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:8002/orders');
+            const response = await fetch(ORDER_SERVER_URL+'/orders');
             const content = await response.json();
             setOrders(content);
         })();

@@ -25,6 +25,8 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+HOST = '127.0.0.1'
+PORT = 8000
 
 def get_database_session():
     try:
@@ -124,4 +126,4 @@ async def create_user(request: Request, db: Session = Depends(get_database_sessi
     })
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host=HOST, port=PORT)

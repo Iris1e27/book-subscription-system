@@ -1,28 +1,26 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
+import {  AutoComplete  } from 'antd';
+
+const USER_SERVER_URL = 'http://127.0.0.1:8000'
 
 let admin_link = '/';
 export const Register = () => {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
-  const navigate = useNavigate();
-
-//   $.validateEmail("ev-f35dcb124285d93528dd3837478ee2fc");
-//
-// // OnClick
-// $("#submit").click(function () {
-//   $("#email").validateEmail(function (response) {
-//     console.log(response);
-//   })
-// })
+  const [options, setOptions] = useState([]);
+  const handleSearch = (value) => {
+    let res = ['gmail.com', '163.com', 'qq.com'].map((domain) => ({
+        label: `@${domain}`,
+      }));
+    setOptions(res);
+  };
 
   const handleClickRegister = async (e) => {
     e.preventDefault();
 
-    await fetch('http://localhost:8000/users', {
+    await fetch(USER_SERVER_URL+'/users', {
             method: 'POST',
             body: JSON.stringify({
                 email, address
@@ -30,6 +28,14 @@ export const Register = () => {
         });
 
     window.location.href = '/login'
+  };
+
+  const handleChangeEmail = (data) => {
+    setEmail(data);
+  };
+
+  const handleChangeAddress = (data) => {
+    setAddress(data);
   };
 
   let google_link = 'https://support.google.com/accounts/answer/27441?hl=zh-Hans';
@@ -65,27 +71,35 @@ export const Register = () => {
             <p>If you don't have a google account, please click <a href={google_link}>here</a> to register a google account first</p>
           </div>
 
-          <form>
 
             <div className='row g-3'>
               <center>
               <div className='col-sm-6'>
-                <label className='form-label'>Email</label>
-                <input
-                  className='form-control'
-                  onChange={(e) => setEmail(e.target.value)}
+                <p>Email</p>
+                <AutoComplete
+                  options={options}
+                  style={{
+                    width: 200,
+                  }}
+                  onSearch={handleSearch}
+                  onChange={handleChangeEmail}
+                  placeholder="input here"
                 />
               </div>
               </center>
             </div>
+
             <p></p>
             <div className='row g-3'>
               <center>
               <div className='col-sm-6'>
-                <label className='form-label'>Address</label>
-                <input
-                  className='form-control'
-                  onChange={(e) => setAddress(e.target.value)}
+                <p>Address</p>
+                <AutoComplete
+                  style={{
+                    width: 200,
+                  }}
+                  onChange={handleChangeAddress}
+                  placeholder="input here"
                 />
               </div>
               </center>
@@ -93,10 +107,8 @@ export const Register = () => {
 
             <center>
             <hr className='my-4' />
-            <button className='w-30 btn btn-primary center' onClick={handleClickRegister}>
-              Register
-            </button></center>
-          </form>
+              <botton className='w-30 btn btn-primary center' onClick={handleClickRegister}>Register</botton>
+            </center>
         </main>
       </div>
 

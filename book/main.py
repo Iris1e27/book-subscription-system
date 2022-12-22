@@ -26,6 +26,8 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+HOST = '127.0.0.1'
+PORT = 8001
 
 def get_database_session():
     try:
@@ -77,4 +79,4 @@ async def update_book(request: Request, id: int, db: Session = Depends(get_datab
     })
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    uvicorn.run(app, host=HOST, port=PORT)

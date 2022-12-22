@@ -19,6 +19,14 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+FRONT_END_URL = 'http://127.0.0.1:3000/'
+USER_SERVER_URL = 'http://127.0.0.1:8000'
+BOOK_SERVER_URL = 'http://127.0.0.1:8001'
+ORDER_SERVER_URL = 'http://127.0.0.1:8002'
+
+HOST = '127.0.0.1'
+PORT = 5000
+
 # GOOGLE_CLIENT_ID = "825199395476-18br125tl2m65lnr54evfuhtlquaj8p5.apps.googleusercontent.com"
 # GOOGLE_CLIENT_SECRET = "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"
 GOOGLE_CLIENT_ID = "894307833243-qdqojkj9pd25aduconsfns23m9qo51rk.apps.googleusercontent.com"
@@ -52,36 +60,6 @@ async def login(request: Request):
     redirect_uri = request.url_for('auth')
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
-
-#@app.get('/auth')
-#async def auth(request: Request):
-#    try:
-#        token = await oauth.google.authorize_access_token(request)
-#    except OAuthError as error:
-#        return HTMLResponse(f'<h1>{error.error}</h1>')
-#    user = token.get('userinfo')
-#    if user:
-#        request.session['user'] = dict(user)
-#    return RedirectResponse(url='/')
-
-# @app.get('/auth')
-# async def auth(request: Request):
-#     try:
-#         token = await oauth.google.authorize_access_token(request)
-#     except OAuthError as error:
-#         return HTMLResponse(f'<h1>{error.error}</h1>')
-#     user = token.get('userinfo')
-#     if user:
-#         request.session['user'] = dict(user) # email = user["email"]
-#     #     response = requests.post('http://127.0.0.1:8000' + '/search-by-email', json=json.dumps(user))
-#     #     if response.status_code != 200: # not find that person
-#     #         newUser = {"email": user["email"], "address": 'aasd'}
-#     #         requests.post('http://127.0.0.1:8000' + '/users', json=json.dumps(newUser))
-#     #     else:
-#     #         return HTMLResponse(f'the user exists')
-#     #     return RedirectResponse(url='/')
-#     return RedirectResponse(url='http://127.0.0.1:3000/users/'+id)
-
 @app.get('/auth')
 async def auth(request: Request):
     try:
@@ -91,29 +69,24 @@ async def auth(request: Request):
     user = token.get('userinfo')
     if user:
         request.session['user'] = dict(user) # email = user["email"]
-        response = requests.post('http://127.0.0.1:8000' + '/users/search-by-email', json=json.dumps(user))
+        response = requests.post(USER_SERVER_URL + '/users/search-by-email', json=json.dumps(user))
         compare1 = response.json()
         print(compare1)
         if compare1 is None: # not find that person
             newUser = {"email": user["email"], "address": 'unknown'}
-            addon = requests.post('http://127.0.0.1:8000' + '/users/json', json=json.dumps(newUser))
+            addon = requests.post(USER_SERVER_URL + '/users/json', json=json.dumps(newUser))
             compare2 = addon.json()
             print(compare2)
             userid2 = compare2['user'][0]['user_id']
             print(userid2)
-            target = 'http://127.0.0.1:3000/'+str(userid2)
+            target = FRONT_END_URL+str(userid2)
             return RedirectResponse(url=target)
         else:
             userid1 = compare1['user'][0]['user_id']
             print(userid1)
-            target = 'http://127.0.0.1:3000/'+str(userid1)
+            target = FRONT_END_URL+str(userid1)
             return RedirectResponse(url=target)
-
-@app.get('/logout')
-async def logout(request: Request):
-    request.session.pop('user', None)
-    return RedirectResponse(url='/')
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=5000)
+    uvicorn.run(app, host=HOST, port=PORT)

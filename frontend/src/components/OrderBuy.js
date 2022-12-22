@@ -2,6 +2,8 @@ import {WrapperID} from "./WrapperID";
 import {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
+const ORDER_SERVER_URL = 'http://127.0.0.1:8002'
+
 export const OrderBuy = () => {
     const [user_id, setUserId] = useState('');
     const [book_id, setBookId] = useState('');
@@ -13,7 +15,7 @@ export const OrderBuy = () => {
     const submit = async e => {
         e.preventDefault();
 
-        await fetch('http://localhost:8002/orders', {
+        await fetch(ORDER_SERVER_URL+'/orders', {
             method: 'POST',
             body: JSON.stringify({
                 user_id, book_id, book_name, price, quantity

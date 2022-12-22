@@ -1,5 +1,4 @@
 import {WrapperID} from "./WrapperID";
-import {Link} from "react-router-dom";
 
 export const CustomerPage = () => {
 

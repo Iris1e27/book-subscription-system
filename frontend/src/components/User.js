@@ -3,6 +3,9 @@ import {Wrapper} from "./Wrapper";
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
+
+const USER_SERVER_URL = 'http://127.0.0.1:8000'
+
 export const User = () => {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -37,7 +40,7 @@ export const User = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:8000/users');
+            const response = await fetch(USER_SERVER_URL+'/users');
             const content = await response.json();
             setUsers(content);
         })();
@@ -45,7 +48,7 @@ export const User = () => {
 
     const del = async (user_id) => {
         if (window.confirm('Are you sure to delete this record?')) {
-            await fetch(`http://localhost:8000/users/${user_id}`, {
+            await fetch(USER_SERVER_URL+`/users/${user_id}`, {
                 method: 'DELETE'
             });
 
@@ -60,7 +63,7 @@ export const User = () => {
             return;
         }
 
-        await fetch(`http://localhost:8000/users/${user_id}`, {
+        await fetch(USER_SERVER_URL+`/users/${user_id}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 update_str,

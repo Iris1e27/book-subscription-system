@@ -4,8 +4,14 @@ export const IdentitySelect = () => {
 
   const handleClickAdmin = async (e) => {
     e.preventDefault();
+    const admin_password = prompt('Type password', '');
 
-    window.location.href="/admin"
+    if (admin_password === "123456") {
+        window.location.href="/admin";
+    } else {
+      return;
+    }
+
   };
 
   const handleClickCustomer = async (e) => {

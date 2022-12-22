@@ -1,23 +1,16 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
+const COMPOSITION_SERVER_URL = 'http://127.0.0.1:5000'
+
 let admin_link = '/';
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState(null);
 
   const handleClickGoogle = async (e) => {
     e.preventDefault();
 
-    window.location.href="http://127.0.0.1:5000"
+    window.location.href=COMPOSITION_SERVER_URL
   };
-
-  // const handleClickLogin = async (e) => {
-  //   e.preventDefault();
-  //
-  //   window.location.href="http://127.0.0.1:5000"
-  // };
 
   let google_link = 'https://support.google.com/accounts/answer/27441?hl=zh-Hans';
 
@@ -52,25 +45,6 @@ export const Login = () => {
             <p>If you don't have a google account, please click <a href={google_link}>here</a> to register a google account first</p>
           </div>
 
-          {/*<form>*/}
-          {/*  <div className='row g-3'>*/}
-          {/*    <center>*/}
-          {/*    <div className='col-sm-6'>*/}
-          {/*      <label className='form-label'>Email</label>*/}
-          {/*      <input*/}
-          {/*        className='form-control'*/}
-          {/*        onChange={(e) => setEmail(e.target.value)}*/}
-          {/*      />*/}
-          {/*    </div>*/}
-          {/*    </center>*/}
-          {/*  </div>*/}
-          {/*  <center>*/}
-          {/*  <hr className='my-4' />*/}
-          {/*  <button className='w-30 btn btn-primary center' onClick={handleClickLogin}>*/}
-          {/*    Log in*/}
-          {/*  </button></center>*/}
-          {/*</form>*/}
-          {/*<p></p>*/}
           <center>
           <botton className='w-30 btn btn-primary center' onClick={handleClickGoogle}>Google Login</botton>
           </center>

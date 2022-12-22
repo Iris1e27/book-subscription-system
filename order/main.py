@@ -27,6 +27,8 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+HOST = '127.0.0.1'
+PORT = 8002
 
 def get_database_session():
     try:
@@ -82,64 +84,4 @@ async def update_book(request: Request, id: int, db: Session = Depends(get_datab
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8002)
-
-# @app.delete("/orders/{id}")
-# async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-#     movie = db.query(Order).get(id)
-#     db.delete(movie)
-#     db.commit()
-#     return JSONResponse(status_code=200, content={
-#         "status_code": 200,
-#         "message": "success",
-#         "movie": None
-#     })
-
-# @app.get("/", response_class=HTMLResponse)
-# async def read_item(request: Request, db: Session = Depends(get_database_session)):
-#     records = db.query(Order).all()
-#     return templates.TemplateResponse("index.html", {"request": request, "data": records})
-#
-#
-# @app.get("/movie/{name}", response_class=HTMLResponse)
-# def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(get_database_session)):
-#     item = db.query(Order).filter(Order.id == name).first()
-#     return templates.TemplateResponse("overview.html", {"request": request, "movie": item})
-#
-#
-# @app.post("/movie/")
-# async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
-#     movie = Order(name=name, url=url, rating=rate, type=type, desc=desc)
-#     db.add(movie)
-#     db.commit()
-#     db.refresh(movie)
-#     response = RedirectResponse('/movie', status_code=303)
-#     return response
-#
-#
-# @app.patch("/movie/{id}")
-# async def update_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-#     requestBody = await request.json()
-#     movie = db.query(Order).get(id)
-#     movie.name = requestBody['name']
-#     movie.desc = requestBody['desc']
-#     db.commit()
-#     db.refresh(movie)
-#     newMovie = jsonable_encoder(movie)
-#     return JSONResponse(status_code=200, content={
-#         "status_code": 200,
-#         "message": "success",
-#         "movie": newMovie
-#     })
-#
-#
-# @app.delete("/movie/{id}")
-# async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-#     movie = db.query(Order).get(id)
-#     db.delete(movie)
-#     db.commit()
-#     return JSONResponse(status_code=200, content={
-#         "status_code": 200,
-#         "message": "success",
-#         "movie": None
-#     })
+    uvicorn.run(app, host=HOST, port=PORT)

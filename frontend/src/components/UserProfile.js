@@ -3,6 +3,9 @@ import {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
 import { WrapperID } from './WrapperID';
 
+
+const USER_SERVER_URL = 'http://127.0.0.1:8000'
+
 export const UserProfile = () => {
   const user_params = useParams();
   let user_id = parseInt(user_params.user_id);
@@ -10,7 +13,7 @@ export const UserProfile = () => {
 
    useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:8000/users/'+user_id);
+            const response = await fetch(USER_SERVER_URL+'/users/'+user_id);
             const content = await response.json();
             setUser(content);
         })();
@@ -18,7 +21,7 @@ export const UserProfile = () => {
 
     const del = async (user_id) => {
         if (window.confirm('Are you sure to delete this record?')) {
-            await fetch(`http://localhost:8000/users/${user_id}`, {
+            await fetch(USER_SERVER_URL+`/users/${user_id}`, {
                 method: 'DELETE'
             });
 
@@ -33,7 +36,7 @@ export const UserProfile = () => {
             return;
         }
 
-        await fetch(`http://localhost:8000/users/${user_id}`, {
+        await fetch(USER_SERVER_URL+`/users/${user_id}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 update_str,
