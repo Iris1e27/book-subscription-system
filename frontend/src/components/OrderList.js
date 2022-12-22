@@ -1,17 +1,20 @@
-import {useEffect, useState} from "react";
-import {Wrapper} from "./Wrapper";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {WrapperID} from "./WrapperID";
+import {Link, useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-export const Orders = () => {
+export const OrderList = () => {
+
+    const user_params = useParams();
+    let user_id = parseInt(user_params.user_id);
+
     const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const PER_PAGE = 15;
     const offset = currentPage * PER_PAGE;
     const currentPageData = orders
         .slice(offset, offset + PER_PAGE)
-        .map(order => {
-                    return <tr key={order.order_id}>
+        .map(order => { return order.user_id === user_id && <tr key={order.order_id}>
                         <td>{order.order_id}</td>
                         <td>{order.user_id}</td>
                         <td>{order.book_id}</td>
@@ -19,22 +22,6 @@ export const Orders = () => {
                         <td>{order.price}</td>
                         <td>{order.quantity}</td>
                         <td>{order.subscribed_at}</td>
-                        <td>
-                            <a href="#" className="btn btn-sm btn-outline-secondary"
-                               onClick={e => del(order.order_id)}
-                            >
-                                Delete
-                            </a>
-                        </td>
-                        <td>
-                            <a
-                              href='#'
-                              className='btn btn-sm btn-outline-secondary'
-                              onClick={(e) => update(order.order_id)}
-                            >
-                              Update
-                            </a>
-                        </td>
                     </tr>
                 })
     const pageCount = Math.ceil(orders.length / PER_PAGE);
@@ -45,42 +32,22 @@ export const Orders = () => {
             const content = await response.json();
             setOrders(content);
         })();
-    }, []);
 
-    const del = async (order_id) => {
-        if (window.confirm('Are you sure to delete this record?')) {
-            await fetch(`http://localhost:8002/orders/${order_id}`, {
-                method: 'DELETE'
-            });
+    }, [user_id]);
 
-            setOrders(orders.filter(obj => obj.order_id !== order_id));
-        }
-    }
-
-    const update = async (order_id) => {
-        const update_num = Number(window.prompt('Type a number to change the quantity', ''));
-        if (update_num === 0) {
-                return;
-            }
-        await fetch(`http://localhost:8002/orders/${order_id}`, {
-          method: 'PATCH',
-          body: JSON.stringify({
-            update_num,
-          }),
-        });
-
-        window.location.reload();
-    };
 
     function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
     }
 
 
-    return <Wrapper>
+    return <WrapperID>
         <div className="pt-3 pb-2 mb-3 border-bottom">
-            <Link to={`/orders/create-an-order`} className="btn btn-sm btn-outline-secondary">Add</Link>
+            <Link to={`/users/buy-an-order/`+user_id} className="btn btn-sm btn-outline-secondary">Buy</Link>
         </div>
+
+        <p></p>
+        <p>Your order list</p>
 
         <div className="table-responsive">
             <table className="table table-striped table-sm">
@@ -111,5 +78,5 @@ export const Orders = () => {
                 </tbody>
             </table>
         </div>
-    </Wrapper>
+    </WrapperID>
 }

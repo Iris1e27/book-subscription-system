@@ -12,11 +12,6 @@ export const UsersCreate = () => {
 
         await fetch('http://localhost:8000/users', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'
-            },
             body: JSON.stringify({
                 email, address
             })

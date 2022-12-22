@@ -77,7 +77,7 @@ export const User = () => {
 
     return <Wrapper>
         <div className="pt-3 pb-2 mb-3 border-bottom">
-            <Link to={`/create-a-user`} className="btn btn-sm btn-outline-secondary">Add</Link>
+            <Link to={`create-a-user`} className="btn btn-sm btn-outline-secondary">Add</Link>
         </div>
 
         <div className="table-responsive">

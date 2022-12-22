@@ -7,9 +7,18 @@ from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse, RedirectResponse
 from authlib.integrations.starlette_client import OAuth, OAuthError
 import requests
-
+from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],#http://localhost:3000
+    allow_methods=['*'],
+    allow_headers=['*']
+)
+
 # GOOGLE_CLIENT_ID = "825199395476-18br125tl2m65lnr54evfuhtlquaj8p5.apps.googleusercontent.com"
 # GOOGLE_CLIENT_SECRET = "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"
 GOOGLE_CLIENT_ID = "894307833243-qdqojkj9pd25aduconsfns23m9qo51rk.apps.googleusercontent.com"
@@ -35,14 +44,7 @@ oauth.register(
 @app.get('/')
 async def homepage(request: Request):
     user = request.session.get('user')
-    # if user:
-    #     data = json.dumps(user)
-    #     html = (
-    #         f'<pre>{data}</pre>'
-    #         '<a href="/logout">logout</a>'
-    #     )
-    #     return HTMLResponse(html)
-    return HTMLResponse('<a href="/login">login</a>')
+    return HTMLResponse('<a href="/login">Click here to login with Google...</a>')
 
 
 @app.get('/login')
@@ -62,6 +64,24 @@ async def login(request: Request):
 #        request.session['user'] = dict(user)
 #    return RedirectResponse(url='/')
 
+# @app.get('/auth')
+# async def auth(request: Request):
+#     try:
+#         token = await oauth.google.authorize_access_token(request)
+#     except OAuthError as error:
+#         return HTMLResponse(f'<h1>{error.error}</h1>')
+#     user = token.get('userinfo')
+#     if user:
+#         request.session['user'] = dict(user) # email = user["email"]
+#     #     response = requests.post('http://127.0.0.1:8000' + '/search-by-email', json=json.dumps(user))
+#     #     if response.status_code != 200: # not find that person
+#     #         newUser = {"email": user["email"], "address": 'aasd'}
+#     #         requests.post('http://127.0.0.1:8000' + '/users', json=json.dumps(newUser))
+#     #     else:
+#     #         return HTMLResponse(f'the user exists')
+#     #     return RedirectResponse(url='/')
+#     return RedirectResponse(url='http://127.0.0.1:3000/users/'+id)
+
 @app.get('/auth')
 async def auth(request: Request):
     try:
@@ -71,14 +91,23 @@ async def auth(request: Request):
     user = token.get('userinfo')
     if user:
         request.session['user'] = dict(user) # email = user["email"]
-    #     response = requests.post('http://127.0.0.1:8000' + '/search-by-email', json=json.dumps(user))
-    #     if response.status_code != 200: # not find that person
-    #         newUser = {"email": user["email"], "address": 'aasd'}
-    #         requests.post('http://127.0.0.1:8000' + '/users', json=json.dumps(newUser))
-    #     else:
-    #         return HTMLResponse(f'the user exists')
-    #     return RedirectResponse(url='/')
-    return RedirectResponse(url='http://127.0.0.1:3000/users/'+id)
+        response = requests.post('http://127.0.0.1:8000' + '/users/search-by-email', json=json.dumps(user))
+        compare1 = response.json()
+        print(compare1)
+        if compare1 is None: # not find that person
+            newUser = {"email": user["email"], "address": 'unknown'}
+            addon = requests.post('http://127.0.0.1:8000' + '/users/json', json=json.dumps(newUser))
+            compare2 = addon.json()
+            print(compare2)
+            userid2 = compare2['user'][0]['user_id']
+            print(userid2)
+            target = 'http://127.0.0.1:3000/'+str(userid2)
+            return RedirectResponse(url=target)
+        else:
+            userid1 = compare1['user'][0]['user_id']
+            print(userid1)
+            target = 'http://127.0.0.1:3000/'+str(userid1)
+            return RedirectResponse(url=target)
 
 @app.get('/logout')
 async def logout(request: Request):
@@ -87,5 +116,4 @@ async def logout(request: Request):
 
 
 if __name__ == '__main__':
-    import uvicorn
     uvicorn.run(app, host='127.0.0.1', port=5000)

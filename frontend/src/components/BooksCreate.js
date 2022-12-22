@@ -13,11 +13,6 @@ export const BooksCreate = () => {
 
     await fetch('http://localhost:8001/books', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-        'Access-Control-Allow-Credentials': 'true',
-      },
       body: JSON.stringify({
         book_name,
         price,

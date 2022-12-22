@@ -2,6 +2,7 @@ import json
 
 from fastapi import Depends, FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse
+from sqlalchemy import select
 from starlette.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from fastapi import Form
@@ -21,7 +22,7 @@ model.Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:3000'],
+    allow_origins=['*'],#http://localhost:3000
     allow_methods=['*'],
     allow_headers=['*']
 )
@@ -39,7 +40,6 @@ def get_database_session():
 async def read_orders(request: Request, db: Session = Depends(get_database_session)):
     orders = db.query(Order).all()
     return orders
-
 
 @app.post("/orders")
 async def create_order(request: Request, db: Session = Depends(get_database_session)):

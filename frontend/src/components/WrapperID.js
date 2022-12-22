@@ -1,19 +1,22 @@
-import { Link } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
-let show_txt = 'Login';
-let show_link = '/login';
+let show_txt = 'Logout';
+let show_link = '/';
+
 
 export const WrapperID = (props) => {
-  if (props.isAuthenticated) {
-    show_txt = 'Logged in';
-    show_link = '/';
-  }
+  const user_params = useParams();
+  let user_id = parseInt(user_params.user_id);
+  let user_link = '/users/'+user_id;
+  let book_link = '/books/'+user_id;
+  let order_link = '/orders/'+user_id;
+  let customer_link = '/'+user_id;
 
   return (
     <>
       <header className='navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow'>
-        <a className='navbar-brand col-md-3 col-lg-2 me-0 px-3' href='#'>
+        <a className='navbar-brand col-md-3 col-lg-2 me-0 px-3' href={customer_link}>
           Book Subscription System
         </a>
 
@@ -22,8 +25,8 @@ export const WrapperID = (props) => {
             <Nav.Link className='nav-link px-3' as={Link} to={show_link}>
               {show_txt}
             </Nav.Link>
-            <Nav.Link className='nav-link px-3' as={Link} to='#'>
-              Welcome
+            <Nav.Link className='nav-link px-3' as={Link} to={customer_link}>
+              Welcome User id: {user_id}
             </Nav.Link>
           </Nav>
         </div>
@@ -41,21 +44,21 @@ export const WrapperID = (props) => {
                   <a
                     className='nav-link active'
                     aria-current='page'
-                    href='/users'
+                    href={user_link}
                   >
                     UserProfile
                   </a>
                   <a
                     className='nav-link active'
                     aria-current='page'
-                    href='/books'
+                    href={book_link}
                   >
                     BookList
                   </a>
                   <a
                     className='nav-link active'
                     aria-current='page'
-                    href='/orders'
+                    href={order_link}
                   >
                     OrderList
                   </a>

@@ -2,6 +2,7 @@ import json
 
 from fastapi import Depends, FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse
+from sqlalchemy import select
 from starlette.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from fastapi import Form
@@ -19,7 +20,7 @@ model.Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:3000'],
+    allow_origins=['*'],#'http://localhost:3000'
     allow_methods=['*'],
     allow_headers=['*']
 )
@@ -46,10 +47,10 @@ async def get_user(request: Request, id: int, db: Session = Depends(get_database
 async def create_user(request: Request, db: Session = Depends(get_database_session)):
     data = await request.json()
     print(data)
-    users = User(email=data["email"], address=data["address"])
-    db.add(users)
+    user = User(email=data["email"], address=data["address"])
+    db.add(user)
     db.commit()
-    db.refresh(users)
+    db.refresh(user)
     response = RedirectResponse('/users', status_code=303)
     return response
 
@@ -80,22 +81,47 @@ async def update_user(request: Request, id: int, db: Session = Depends(get_datab
 
 @app.post("/users/search-by-email")
 async def update_user(request: Request, db: Session = Depends(get_database_session)):
-    requestBody = await request.json()
-    data = requestBody.loads()
-    print(data["email"])
-    result = db.query(User).filter(User.email == data["email"]).all()
-    if len(result) == 0:
-        JSONResponse(status_code=404, content={
-            "status_code": 404,
-            "message": "not found"
+    requestBodyor = await request.json()
+    requestBody = json.loads(requestBodyor)
+    print(requestBody["email"])
+    statement = select(User).filter_by(email=requestBody["email"])
+    user = db.scalars(statement).all()
+    print(len(user))
+    the_user = jsonable_encoder(user)
+    #print(the_user)
+    if len(the_user) == 0:
+        print('sdssdsds')
+        JSONResponse(status_code=200, content={
+            "status_code": 200,
+            "message": "sucess",
+            "user": the_user
         })
     else:
+        print('2222222')
         return JSONResponse(status_code=200, content={
             "status_code": 200,
             "message": "success",
-            "user": json.dumps(result)
+            "user": the_user
         })
 
+
+@app.post("/users/json")
+async def create_user(request: Request, db: Session = Depends(get_database_session)):
+    dataor = await request.json()
+    data = json.loads(dataor)
+    print(data)
+    users = User(email=data["email"], address=data["address"])
+    db.add(users)
+    db.commit()
+    db.refresh(users)
+    statement2 = select(User).filter_by(email=data["email"])
+    user = db.scalars(statement2).all()
+    the_user = jsonable_encoder(user)
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
+        "message": "sucess",
+        "user": the_user
+    })
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

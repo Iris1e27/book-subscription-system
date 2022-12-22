@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Wrapper } from './Wrapper';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { WrapperID } from './WrapperID';
 import ReactPaginate from "react-paginate";
 
-export const Book = () => {
+export const BookList = () => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
     const PER_PAGE = 15;
@@ -17,24 +16,6 @@ export const Book = () => {
                   <td>{book.book_name}</td>
                   <td>{book.price}</td>
                   <td>{book.quantity}</td>
-                  <td>
-                    <a
-                      href='#'
-                      className='btn btn-sm btn-outline-secondary'
-                      onClick={(e) => del(book.book_id)}
-                    >
-                      Delete
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href='#'
-                      className='btn btn-sm btn-outline-secondary'
-                      onClick={(e) => update(book.book_id)}
-                    >
-                      Update
-                    </a>
-                  </td>
                 </tr>
               );
             })
@@ -48,47 +29,16 @@ export const Book = () => {
     })();
   }, []);
 
-  const del = async (book_id) => {
-    if (window.confirm('Are you sure to delete this record?')) {
-      await fetch(`http://localhost:8001/books/${book_id}`, {
-        method: 'DELETE',
-      });
-
-      setBooks(books.filter((obj) => obj.book_id !== book_id));
-    }
-  };
-
-  const update = async (book_id) => {
-    const update_num = Number(window.prompt('Type a number to change the quantity', ''));
-
-    if (update_num === 0) {
-        return;
-    }
-
-    await fetch(`http://localhost:8001/books/${book_id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        update_num,
-      }),
-    });
-
-    window.location.reload();
-  };
 
   function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
   }
 
   return (
-    <Wrapper>
-      <div className='pt-3 pb-2 mb-3 border-bottom'>
-        <Link
-          to={`/books/create-a-book`}
-          className='btn btn-sm btn-outline-secondary'
-        >
-          Add
-        </Link>
-      </div>
+    <WrapperID>
+
+        <p></p>
+        <p>Our book list</p>
 
       <div className='table-responsive'>
         <table className='table table-striped table-sm'>
@@ -116,6 +66,6 @@ export const Book = () => {
           </tbody>
         </table>
       </div>
-    </Wrapper>
+    </WrapperID>
   );
 };

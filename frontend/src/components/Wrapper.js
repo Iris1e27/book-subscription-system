@@ -3,17 +3,14 @@ import { Nav } from 'react-bootstrap';
 
 let show_txt = 'Login';
 let show_link = '/login';
+let welcome_link = '/';
 
 export const Wrapper = (props) => {
-  if (props.isAuthenticated) {
-    show_txt = 'Logged in';
-    show_link = '/';
-  }
 
   return (
     <>
       <header className='navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow'>
-        <a className='navbar-brand col-md-3 col-lg-2 me-0 px-3' href='#'>
+        <a className='navbar-brand col-md-3 col-lg-2 me-0 px-3' href={welcome_link}>
           Book Subscription System
         </a>
 
@@ -22,7 +19,7 @@ export const Wrapper = (props) => {
             <Nav.Link className='nav-link px-3' as={Link} to={show_link}>
               {show_txt}
             </Nav.Link>
-            <Nav.Link className='nav-link px-3' as={Link} to='#'>
+            <Nav.Link className='nav-link px-3' as={Link} to={welcome_link}>
               Welcome
             </Nav.Link>
           </Nav>

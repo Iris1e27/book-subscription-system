@@ -1,47 +1,44 @@
-import { Wrapper } from './Wrapper';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
+let admin_link = '/';
 export const Register = () => {
-  const [userID, setUserId] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
-  // const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const submit = async (e) => {
+//   $.validateEmail("ev-f35dcb124285d93528dd3837478ee2fc");
+//
+// // OnClick
+// $("#submit").click(function () {
+//   $("#email").validateEmail(function (response) {
+//     console.log(response);
+//   })
+// })
+
+  const handleClickRegister = async (e) => {
     e.preventDefault();
 
-    await fetch(
-      'http://localhost:8000/users',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:3000/',
-          'Access-Control-Allow-Credentials': 'true',
-        },
-        body: JSON.stringify({
-          userID,
-          email,
-          address,
-          // password,
-        }),
-      },
-      (window.location.href = '/')
-    );
+    await fetch('http://localhost:8000/users', {
+            method: 'POST',
+            body: JSON.stringify({
+                email, address
+            })
+        });
 
-    await navigate(-1);
+    window.location.href = '/login'
   };
+
+  let google_link = 'https://support.google.com/accounts/answer/27441?hl=zh-Hans';
 
   return (
     // <Wrapper>
     <>
       <header className='navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow'>
-        <a className='navbar-brand col-md-3 col-lg-2 me-0 px-3' href='#'>
+        <a className='navbar-brand col-md-3 col-lg-2 me-0 px-3' href={admin_link}>
           Book Subscription System
         </a>
 
@@ -50,8 +47,7 @@ export const Register = () => {
             <Nav.Link className='nav-link px-3' as={Link} to='/login'>
               Login
             </Nav.Link>
-
-            <Nav.Link className='nav-link px-3' as={Link} to='#'>
+            <Nav.Link className='nav-link px-3' as={Link} to={admin_link}>
               Welcome
             </Nav.Link>
           </Nav>
@@ -59,34 +55,51 @@ export const Register = () => {
       </header>
 
       <div className='container'>
-        <form className='mt-3' onSubmit={submit}>
-
-          <div className='form-floating pb-3'>
-            <input
-              type='string'
-              className='form-control'
-              placeholder='e_mail'
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label>email</label>
+        <main>
+          <div className='py-5 text-center'>
+            <h2>Register For Your New Account</h2>
           </div>
 
-          <div className='form-floating pb-3'>
-            <input
-              type='string'
-              className='form-control'
-              placeholder='address'
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <label>address</label>
+          <div className='py-5 text-center'>
+            <p>In order to protect your account, we only accept <b>a valid google account</b> for your register</p>
+            <p>If you don't have a google account, please click <a href={google_link}>here</a> to register a google account first</p>
           </div>
 
-          <button className='w-100 btn btn-lg btn-primary' type='submit'>
-            Submit
-          </button>
-        </form>
-        {/* // </Wrapper> */}
+          <form>
+
+            <div className='row g-3'>
+              <center>
+              <div className='col-sm-6'>
+                <label className='form-label'>Email</label>
+                <input
+                  className='form-control'
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              </center>
+            </div>
+            <p></p>
+            <div className='row g-3'>
+              <center>
+              <div className='col-sm-6'>
+                <label className='form-label'>Address</label>
+                <input
+                  className='form-control'
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+              </center>
+            </div>
+
+            <center>
+            <hr className='my-4' />
+            <button className='w-30 btn btn-primary center' onClick={handleClickRegister}>
+              Register
+            </button></center>
+          </form>
+        </main>
       </div>
+
     </>
   );
 };

@@ -1,8 +1,8 @@
-import {Wrapper} from "./Wrapper";
+import {WrapperID} from "./WrapperID";
 import {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
-export const OrdersCreate = () => {
+export const OrderBuy = () => {
     const [user_id, setUserId] = useState('');
     const [book_id, setBookId] = useState('');
     const [book_name, setBookName] = useState('');
@@ -23,7 +23,7 @@ export const OrdersCreate = () => {
         await navigate(-1);
     }
 
-    return <Wrapper>
+    return <WrapperID>
         <form className="mt-3" onSubmit={submit}>
             <div className="form-floating pb-3">
                 <input type="number" className="form-control" placeholder="user_id"
@@ -62,5 +62,5 @@ export const OrdersCreate = () => {
 
             <button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
         </form>
-    </Wrapper>
+    </WrapperID>
 }
