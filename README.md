@@ -11,8 +11,8 @@ A group project for COMS E6156, written by 6 people
   - `npm install package`
   - `npm start`
 
-- Terminal 1,2,3: 
-  - `cd order` and `cd book` and `cd user`
+- Terminal 1,2,3,4: 
+  - `cd order` and `cd book` and `cd user` and `cd composition`
   - `pip install -r requirements.txt`
   - `python main.py`
   - or if no main `uvicorn main:app --reload` (default port is 8000)
