@@ -38,12 +38,12 @@ def get_database_session():
 
 
 @app.get("/books")
-async def read_orders(request: Request, db: Session = Depends(get_database_session)):
+async def read_books(request: Request, db: Session = Depends(get_database_session)):
     orders = db.query(Books).all()
     return orders
 
 @app.post("/books")
-async def create_order(request: Request, db: Session = Depends(get_database_session)):
+async def create_book(request: Request, db: Session = Depends(get_database_session)):
     data = await request.json()
     print(data)
     books = Books(book_name=data["book_name"], price=data["price"], quantity=data["quantity"])
