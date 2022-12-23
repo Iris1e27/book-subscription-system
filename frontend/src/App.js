@@ -15,6 +15,7 @@ import {UserProfile} from "./components/UserProfile";
 import {AdminPage} from "./components/AdminPage";
 import {CustomerPage} from "./components/CustomerPage";
 import {IdentitySelect} from "./components/IdentitySelect";
+import {LoginwithEmail} from "./components/LoginWithEmail";
 
 function App() {
     return <BrowserRouter>
@@ -24,6 +25,7 @@ function App() {
             <Route path='/:user_id' element={<CustomerPage />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/loginwithemail' element={<LoginwithEmail />} />
             <Route path="/orders" element={<Orders/>}/>
             <Route path="/orders/create-an-order" element={<OrdersCreate/>}/>
             <Route path="/users/buy-an-order/:user_id" element={<OrderBuy/>}/>
