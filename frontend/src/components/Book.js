@@ -52,7 +52,7 @@ export const Book = () => {
 
   const del = async (book_id) => {
     if (window.confirm('Are you sure to delete this record?')) {
-      await fetch(BOOK_SERVER_URL+book_id, {
+      await fetch(BOOK_SERVER_URL+'/'+book_id, {
         method: 'DELETE',
       });
 
