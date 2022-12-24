@@ -52,7 +52,7 @@ export const Orders = () => {
 
     const del = async (order_id) => {
         if (window.confirm('Are you sure to delete this record?')) {
-            await fetch(ORDER_SERVER_URL+`orders/${order_id}`, {
+            await fetch(ORDER_SERVER_URL+`/orders/${order_id}`, {
                 method: 'DELETE'
             });
 
