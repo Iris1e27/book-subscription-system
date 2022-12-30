@@ -18,4 +18,14 @@ A group project for COMS E6156, written by 6 people
   - `python main.py`
   - or if no main `uvicorn main:app --reload` (default port is 8000)
 
+## About requirements
 
+- sprint 1: https://github.com/donald-f-ferguson/Topics-in-SW-Engineering-F22/blob/main/Sprints/SPRINT-1.md
+- sprint 2: https://github.com/donald-f-ferguson/Topics-in-SW-Engineering-F22/blob/main/docs/Project-Sprints/README-Sprint-2.md
+
+## About implementation
+
+- fastapi as a backend framework
+- react.js as a frontend framework
+- we use microservices as a software architecture (each folder is a microservice)
+- mysql database (rds in aws)
