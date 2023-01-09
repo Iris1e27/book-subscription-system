@@ -66,23 +66,23 @@ A group project for COMS E6156, written by 6 people
 
 ## About results
 
-Identity selection interface
+### Identity selection interface
 ![image](https://user-images.githubusercontent.com/42087697/211355139-bab26d84-8213-4b47-8536-1d4b8cc3c468.png)
 
-Administrator management intgerface (view all orders)
+### Administrator management intgerface (view all orders)
 ![image](https://user-images.githubusercontent.com/42087697/211355432-70fdd37d-8ead-4e14-838f-086a439b3a69.png)
 
-Add interface (user)
+### Add interface (user)
 ![image](https://user-images.githubusercontent.com/42087697/211355714-3b06823d-1b1b-4bee-bf2d-947301bd768c.png)
 
-Login interface
+### Login interface
 ![image](https://user-images.githubusercontent.com/42087697/211355817-5f4c018f-e7e1-44c7-bd08-56bc23177f4d.png)
 
-Register interface
+### Register interface
 ![image](https://user-images.githubusercontent.com/42087697/211355857-2a771a11-fdc0-4ab1-af48-f2615ae5d502.png)
 
-Customer interface
-![image](https://user-images.githubusercontent.com/42087697/211356097-92d06270-8f7e-4467-9f12-c96f379f8b93.png)
+### Customer interface
+![image](https://user-images.githubusercontent.com/42087697/211358438-bdd7217a-ca7f-4085-a55c-df59352ce64b.png)
 
-Customer orderlist interface (only view his own order)
+### Customer orderlist interface (only view his own order)
 ![image](https://user-images.githubusercontent.com/42087697/211356181-cbb3d786-c6de-4e91-af88-47b2aa044809.png)
