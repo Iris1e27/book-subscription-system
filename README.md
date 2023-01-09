@@ -1,7 +1,7 @@
 # book-subscription-system
-A group project for COMS E6156, written by 6 people
-
-# Overview
+- A cloud web app called book subscription system
+- Main function is that the administrator can manage books, customers can subscribe to books and view their orders
+- A group project for COMS E6156, written by 6 people
 
 ## How to run
 
