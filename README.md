@@ -86,3 +86,6 @@ A group project for COMS E6156, written by 6 people
 
 ### Customer orderlist interface (only view his own order)
 ![image](https://user-images.githubusercontent.com/42087697/211356181-cbb3d786-c6de-4e91-af88-47b2aa044809.png)
+
+### Detailed other functions
+you can download to see them if needed.
