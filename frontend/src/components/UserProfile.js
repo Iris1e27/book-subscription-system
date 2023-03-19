@@ -2,11 +2,13 @@ import React from "react";
 import {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
 import { WrapperID } from './WrapperID';
+import { useNavigate  } from 'react-router-dom';
 
 
 const USER_SERVER_URL = 'http://127.0.0.1:8000'
 
 export const UserProfile = () => {
+    const navigate = useNavigate()
   const user_params = useParams();
   let user_id = parseInt(user_params.user_id);
   const [user, setUser] = useState([]);
@@ -24,8 +26,8 @@ export const UserProfile = () => {
             await fetch(USER_SERVER_URL+`/users/${user_id}`, {
                 method: 'DELETE'
             });
-
-            window.location.href='/'
+            navigate("/")
+            // window.location.href='/'
         }
     }
 

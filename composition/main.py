@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-FRONT_END_URL = 'http://127.0.0.1:3000/'
+FRONT_END_URL = 'http://127.0.0.1:3000/#/'
 USER_SERVER_URL = 'http://127.0.0.1:8000'
 BOOK_SERVER_URL = 'http://127.0.0.1:8001'
 ORDER_SERVER_URL = 'http://127.0.0.1:8002'

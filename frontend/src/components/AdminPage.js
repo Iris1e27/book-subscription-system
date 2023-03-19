@@ -1,5 +1,4 @@
 import {Wrapper} from "./Wrapper";
-import {Link} from "react-router-dom";
 
 export const AdminPage = () => {
 

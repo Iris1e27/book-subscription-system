@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { Wrapper } from './Wrapper';
 import { Link } from 'react-router-dom';
 import ReactPaginate from "react-paginate";
+import {useNavigate} from 'react-router-dom';
 
 const BOOK_SERVER_URL = 'http://127.0.0.1:8001'
 
 export const Book = () => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
+
     const PER_PAGE = 15;
     const offset = currentPage * PER_PAGE;
     const currentPageData = books
@@ -52,7 +55,7 @@ export const Book = () => {
 
   const del = async (book_id) => {
     if (window.confirm('Are you sure to delete this record?')) {
-      await fetch(BOOK_SERVER_URL+'/'+book_id, {
+      await fetch(BOOK_SERVER_URL+`/books/${book_id}`, {
         method: 'DELETE',
       });
 
@@ -67,14 +70,14 @@ export const Book = () => {
         return;
     }
 
-    await fetch(+`/books/${book_id}`, {
+    await fetch(BOOK_SERVER_URL+`/books/${book_id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         update_num,
       }),
     });
 
-    window.location.reload();
+    await navigate(-1);
   };
 
   function handlePageClick({ selected: selectedPage }) {

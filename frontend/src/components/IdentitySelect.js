@@ -1,13 +1,15 @@
 import {Nav} from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 
 export const IdentitySelect = () => {
-
+  const navigate = useNavigate()
   const handleClickAdmin = async (e) => {
     e.preventDefault();
     const admin_password = prompt('Type password', '');
 
     if (admin_password === "123456") {
-        window.location.href="/admin";
+      navigate("/admin")
+        // window.location.href="/admin";
     } else {
       return;
     }
@@ -16,8 +18,8 @@ export const IdentitySelect = () => {
 
   const handleClickCustomer = async (e) => {
     e.preventDefault();
-
-    window.location.href="/login"
+    navigate("/login")
+    // window.location.href="/#/login"
   };
 
     return <>

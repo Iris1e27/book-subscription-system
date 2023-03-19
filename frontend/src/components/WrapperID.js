@@ -8,10 +8,10 @@ let show_link = '/';
 export const WrapperID = (props) => {
   const user_params = useParams();
   let user_id = parseInt(user_params.user_id);
-  let user_link = '/users/'+user_id;
-  let book_link = '/books/'+user_id;
-  let order_link = '/orders/'+user_id;
-  let customer_link = '/'+user_id;
+  let user_link = '#/users/'+user_id;
+  let book_link = '#/books/'+user_id;
+  let order_link = '#/orders/'+user_id;
+  let customer_link = '#/'+user_id;
 
   return (
     <>

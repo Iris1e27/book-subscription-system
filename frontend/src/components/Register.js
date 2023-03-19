@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import {  AutoComplete  } from 'antd';
+import { useNavigate  } from 'react-router-dom';
 
 const USER_SERVER_URL = 'http://127.0.0.1:8000'
 
 let admin_link = '/';
 export const Register = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [options, setOptions] = useState([]);
@@ -26,8 +28,8 @@ export const Register = () => {
                 email, address
             })
         });
-
-    window.location.href = '/login'
+        navigate("/login")
+    // window.location.href = '/login'
   };
 
   const handleChangeEmail = (data) => {

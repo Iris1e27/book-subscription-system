@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {HashRouter, Routes, Route} from 'react-router-dom';
 import { BooksCreate } from './components/BooksCreate';
 import { Book } from './components/Book';
 import {BookList} from './components/BookList';
@@ -15,17 +15,15 @@ import {UserProfile} from "./components/UserProfile";
 import {AdminPage} from "./components/AdminPage";
 import {CustomerPage} from "./components/CustomerPage";
 import {IdentitySelect} from "./components/IdentitySelect";
-import {LoginwithEmail} from "./components/LoginWithEmail";
 
 function App() {
-    return <BrowserRouter>
+    return <HashRouter>
         <Routes>
-            <Route path="/" element={<IdentitySelect/>}/>
-            <Route path="/admin" element={<AdminPage/>}/>
+            <Route exact path="/" element={<IdentitySelect/>} />
+            <Route path="/admin" element={<AdminPage/>} />
             <Route path='/:user_id' element={<CustomerPage />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/loginwithemail' element={<LoginwithEmail />} />
             <Route path="/orders" element={<Orders/>}/>
             <Route path="/orders/create-an-order" element={<OrdersCreate/>}/>
             <Route path="/users/buy-an-order/:user_id" element={<OrderBuy/>}/>
@@ -36,9 +34,9 @@ function App() {
             <Route path='/users' element={<User />} />
             <Route path='/users/create-a-user' element={<UsersCreate />} />
             <Route path='/users/:user_id' element={<UserProfile />} />
-            <Route component={<NotFound/>}/>
+            <Route path='*' component={<NotFound/>}/>
         </Routes>
-    </BrowserRouter>;
+    </HashRouter>;
 }
 
 export default App;

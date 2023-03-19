@@ -2,13 +2,15 @@ import {useEffect, useState} from "react";
 import {Wrapper} from "./Wrapper";
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-
+import {useNavigate} from 'react-router-dom';
 
 const USER_SERVER_URL = 'http://127.0.0.1:8000'
 
 export const User = () => {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const navigate = useNavigate();
+
     const PER_PAGE = 15;
     const offset = currentPage * PER_PAGE;
     const currentPageData = users
@@ -70,7 +72,7 @@ export const User = () => {
             }),
         });
 
-        window.location.reload();
+        await navigate(-1);
     };
 
     function handlePageClick({ selected: selectedPage }) {

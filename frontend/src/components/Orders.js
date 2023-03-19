@@ -2,13 +2,15 @@ import {useEffect, useState} from "react";
 import {Wrapper} from "./Wrapper";
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-
+import {useNavigate} from 'react-router-dom';
 
 const ORDER_SERVER_URL = 'http://127.0.0.1:8002'
 
 export const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const navigate = useNavigate();
+
     const PER_PAGE = 15;
     const offset = currentPage * PER_PAGE;
     const currentPageData = orders
@@ -65,14 +67,14 @@ export const Orders = () => {
         if (update_num === 0) {
                 return;
             }
-        await fetch(ORDER_SERVER_URL+`orders/${order_id}`, {
+        await fetch(ORDER_SERVER_URL+`/orders/${order_id}`, {
           method: 'PATCH',
           body: JSON.stringify({
             update_num,
           }),
         });
 
-        window.location.reload();
+        await navigate(-1);
     };
 
     function handlePageClick({ selected: selectedPage }) {

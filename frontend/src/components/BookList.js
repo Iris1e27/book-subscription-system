@@ -21,6 +21,7 @@ export const BookList = () => {
                 </tr>
               );
             })
+          
     const pageCount = Math.ceil(books.length / PER_PAGE);
 
   useEffect(() => {

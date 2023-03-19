@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
 let show_txt = 'Login';
-let show_link = '/login';
+let show_link = '/#/login';
 let welcome_link = '/';
 
 export const Wrapper = (props) => {
@@ -38,21 +38,21 @@ export const Wrapper = (props) => {
                   <a
                     className='nav-link active'
                     aria-current='page'
-                    href='/users'
+                    href='/#/users'
                   >
                     Users
                   </a>
                   <a
                     className='nav-link active'
                     aria-current='page'
-                    href='/books'
+                    href='/#/books'
                   >
                     Books
                   </a>
                   <a
                     className='nav-link active'
                     aria-current='page'
-                    href='/orders'
+                    href='/#/orders'
                   >
                     Orders
                   </a>
